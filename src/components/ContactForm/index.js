@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Form, ButtonContainer } from './styles';
@@ -8,23 +9,38 @@ import Select from '../Select';
 import Button from '../Button';
 
 export default function ContactForm({ buttonLabel }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [category, setCategory] = useState('');
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    console.log({
+      name, email, phone, category,
+    });
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <FormGroup>
-        <Input placeholder="Name" />
+        <Input value={name} placeholder="Name" onChange={(event) => setName(event.target.value)} />
       </FormGroup>
 
       <FormGroup error="Invalid email format">
-        <Input placeholder="Email" error />
+        <Input value={email} placeholder="Email" onChange={(event) => setEmail(event.target.value)} />
       </FormGroup>
 
       <FormGroup>
-        <Input placeholder="Phone" />
+        <Input value={phone} placeholder="Phone" onChange={(event) => setPhone(event.target.value)} />
       </FormGroup>
 
       <FormGroup>
-        <Select>
-          <option value="instagram">instagram</option>
+        <Select value={category} onChange={(event) => setCategory(event.target.value)}>
+          <option value="">Category</option>
+          <option value="instagram">Instagram</option>
+          <option value="linkedin">Linkedin</option>
         </Select>
       </FormGroup>
 
