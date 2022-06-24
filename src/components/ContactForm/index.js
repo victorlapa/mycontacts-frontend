@@ -7,6 +7,8 @@ import FormGroup from '../FormGroup';
 import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
+import isEmailValid from '../../utils';
+import useErrors from '../../hooks/useErrors';
 
 export default function ContactForm({ buttonLabel }) {
   const [name, setName] = useState('');
@@ -14,22 +16,40 @@ export default function ContactForm({ buttonLabel }) {
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
 
+  const { setError, removeError, getErrorMessageByFieldName } = useErrors();
+
+  function handleNameChange(event) {
+    setName(event.target.value);
+
+    if (!event.target.value) {
+      setError({ field: 'name', message: 'Name is required.' });
+    } else {
+      removeError('name');
+    }
+  }
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+
+    if (event.target.value && !isEmailValid(event.target.value)) {
+      setError({ field: 'email', message: 'Email is invalid.' });
+    } else {
+      removeError('email');
+    }
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-
-    console.log({
-      name, email, phone, category,
-    });
   }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormGroup>
-        <Input value={name} placeholder="Name" onChange={(event) => setName(event.target.value)} />
+      <FormGroup error={getErrorMessageByFieldName('name')}>
+        <Input value={name} placeholder="Name" onChange={handleNameChange} error={getErrorMessageByFieldName('name')} />
       </FormGroup>
 
-      <FormGroup error="Invalid email format">
-        <Input value={email} placeholder="Email" onChange={(event) => setEmail(event.target.value)} />
+      <FormGroup error={getErrorMessageByFieldName('email')}>
+        <Input value={email} placeholder="Email" onChange={handleEmailChange} error={getErrorMessageByFieldName('email')} />
       </FormGroup>
 
       <FormGroup>
