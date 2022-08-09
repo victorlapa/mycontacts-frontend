@@ -22,7 +22,7 @@ export default function Home() {
 
       <Header>
         <strong>3 contacts</strong>
-        <Link to="/new">New contact</Link>
+        <Link to="/new" className="btn-new">New contact</Link>
       </Header>
 
       <Header>

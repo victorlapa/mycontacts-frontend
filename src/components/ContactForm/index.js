@@ -65,7 +65,7 @@ export default function ContactForm({ buttonLabel }) {
       </FormGroup>
 
       <ButtonContainer>
-        <Button type="submit">{buttonLabel}</Button>
+        <Button type="submit" className="btn-submit">{buttonLabel}</Button>
       </ButtonContainer>
     </Form>
   );
